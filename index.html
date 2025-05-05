@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CET Announcements</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: url('file:///C:/Users/zyane/OneDrive/Pictures/Alangilan-CET.jpg') no-repeat center center fixed,
+                  linear-gradient(135deg, rgba(139,0,0,0.5), rgba(255,0,0,0.5), rgba(255,215,0,0.3), rgba(255,255,255,0.3));
+      background-size: cover;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    header {
+      background-color: rgba(0, 0, 0, 0.85);
+      color: #FFD700;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      text-align: center;
+      animation: shine 3s infinite;
+      background: linear-gradient(90deg, #FFD700, #FFFFFF, #FFD700);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    @keyframes shine {
+      0% { background-position: -200% center; }
+      50% { background-position: 200% center; }
+      100% { background-position: -200% center; }
+    }
+
+    .logo {
+      position: absolute;
+      height: 100px;
+      top: 10px;
+      filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.7));
+    }
+
+    .logo.left { left: 20px; }
+    .logo.right { right: 20px; }
+
+    .fullscreen-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: none;
+      border: 2px solid #FFD700;
+      color: #FFD700;
+      padding: 6px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+
+    .fullscreen-btn:hover {
+      background-color: #FFD700;
+      color: #000;
+    }
+
+    main {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page {
+      position: absolute;
+      width: 90%;
+      max-width: 1000px;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.75);
+      border-radius: 15px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.6);
+      opacity: 0;
+      transform: scale(0.9) rotateX(10deg);
+      transition: all 1.5s ease;
+    }
+
+    .page.active {
+      opacity: 1;
+      transform: scale(1) rotateX(0deg);
+      z-index: 1;
+    }
+
+    h2 {
+      color: #FFD700;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .announcement, .upcoming-events li {
+      margin: 20px 0;
+      font-size: 1.6rem;
+      line-height: 1.6;
+    }
+
+    footer {
+      background-color: rgba(0, 0, 0, 0.85);
+      color: #FFD700;
+      text-align: center;
+      padding: 15px;
+      font-size: 1.1rem;
+    }
+
+    .blackout, .welcome {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+
+    .blackout.show, .welcome.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .blackout-logo, .welcome-logo {
+      width: 250px;
+      margin-bottom: 20px;
+      transform: scale(0);
+      animation: zoomIn 4s ease forwards;
+      filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.9));
+    }
+
+    @keyframes zoomIn {
+      0% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    /* New zoom out and fade animation */
+    @keyframes zoomOutFade {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(5);
+        opacity: 0;
+      }
+    }
+
+    .blackout-logo.zoom-out {
+      animation: zoomOutFade 2s ease forwards;
+    }
+
+    .blackout-message, .welcome-message {
+      margin-top: 30px;
+      font-size: 2rem;
+      color: #FFD700;
+      animation: fadeIn 2s ease forwards;
+      opacity: 0;
+      text-align: center;
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="file:///C:/Users/zyane/OneDrive/Pictures/CET_LOGO-removebg-preview.png" class="logo left">
+    <div class="title">CET ANNOUNCEMENTS</div>
+    <img src="file:///C:/Users/zyane/OneDrive/Pictures/Batangas_State_Logo.png" class="logo right">
+  </header>
+
+  <main>
+    <div id="page1" class="page active">
+      <h2>Latest Announcements</h2>
+      <div class="announcement">📢 No school on May 15th due to a public holiday!</div>
+      <div class="announcement">📢 Payment of TECHLINK Membership Fee: PHP 100.00</div>
+      <div class="announcement">📢 CET CS Membership Fee: PHP 35.00</div>
+    </div>
+
+    <div id="page2" class="page">
+      <h2>Upcoming Events</h2>
+      <ul class="upcoming-events">
+        <li>📢 CET DAY: APRIL 26, 2025</li>
+        <li>🏆 SPARTAFEST 2025: One night, One beat, One Spartan spirit</li>
+        <li>📢National Youth Pilgrimage 2025</li>
+      </ul>
+    </div>
+  </main>
+
+  <button class="fullscreen-btn" onclick="toggleFullscreen()">Full Screen</button>
+
+  <footer>&copy; 2025 Batangas State University-Alangilan TNEU | CET Department</footer>
+
+  <!-- Blackout Screen -->
+  <div class="blackout" id="blackout">
+    <img src="file:///C:/Users/zyane/OneDrive/Pictures/Batangas_State_Logo.png" class="blackout-logo">
+    <div class="blackout-message">See you tomorrow SPARTANS!</div>
+  </div>
+
+  <!-- Welcome Back Screen -->
+  <div class="welcome" id="welcome">
+    <img src="file:///C:/Users/zyane/OneDrive/Pictures/Batangas_State_Logo.png" class="welcome-logo">
+    <div class="welcome-message">Welcome Back SPARTANS!</div>
+  </div>
+
+  <script>
+    let currentPage = 1;
+    const totalPages = 2;
+
+    function showPage(pageNumber) {
+      for (let i = 1; i <= totalPages; i++) {
+        document.getElementById(`page${i}`).classList.remove('active');
+      }
+      document.getElementById(`page${pageNumber}`).classList.add('active');
+    }
+
+    setInterval(() => {
+      currentPage = currentPage % totalPages + 1;
+      showPage(currentPage);
+    }, 15000);
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    function checkBlackout() {
+      const now = new Date();
+      const hours = now.getHours();
+      const blackout = document.getElementById('blackout');
+      const welcome = document.getElementById('welcome');
+      const blackoutLogo = document.querySelector('.blackout-logo');
+
+      if (hours >= 18 || hours < 7) {
+        blackout.classList.add('show');
+        welcome.classList.remove('show');
+        sessionStorage.removeItem('welcomeShown');
+      } else {
+        if (blackout.classList.contains('show')) {
+          blackoutLogo.classList.add('zoom-out');
+          setTimeout(() => {
+            blackout.classList.remove('show');
+            blackoutLogo.classList.remove('zoom-out');
+            if (!sessionStorage.getItem('welcomeShown')) {
+              welcome.classList.add('show');
+              setTimeout(() => {
+                welcome.classList.remove('show');
+                sessionStorage.setItem('welcomeShown', 'true');
+              }, 10000);
+            }
+          }, 2000);
+        }
+      }
+    }
+
+    setInterval(checkBlackout, 1000);
+    checkBlackout();
+  </script>
+
+</body>
+</html>
